@@ -7,7 +7,7 @@ import { BigNumber } from 'bignumber.js';
 /// TO USE THEM, CONFIGURE THEM AS SHOWN INSIDE CONFIG BELOW
 
 // import CoinFlexFLEXApiWrapper from './TokenPriceFeeder/ApiWrapper/CoinflexFLEXApiWrapper'
-import BitcoinComSpiceApiWrapper from './TokenPriceFeeder/ApiWrapper/BitcoinComSpiceApiWrapper'
+// import BitcoinComSpiceApiWrapper from './TokenPriceFeeder/ApiWrapper/BitcoinComSpiceApiWrapper'
 // import CoinexUSDTApiWrapper from './TokenPriceFeeder/ApiWrapper/CoinexUSDTApiWrapper'
 
 export interface StampConfig {
@@ -15,7 +15,7 @@ export interface StampConfig {
     symbol: string;
     tokenId: string;
     decimals: number;
-    rate: BigNumber;
+    rate: number;
 }
 
 export interface PostageConfig {
@@ -33,13 +33,13 @@ export interface PostageRateConfig {
     stamps: StampConfig[];
 }
 
-export interface PriceFeederConfig {
-    tick?: number;
-    tokenId: string;
-    feederClass: any; // TODO make better typed
-    useInitialStampRateAsMin?: boolean;
-    rule?: (n: BigNumber) => BigNumber;
-}
+// export interface PriceFeederConfig {
+    // tick?: number;
+    // tokenId: string;
+    // feederClass: any; // TODO make better typed
+    // useInitialStampRateAsMin?: boolean;
+    // rule?: (n: BigNumber) => BigNumber;
+// }
 
 export interface ServerConfig {
     server: {
@@ -55,7 +55,7 @@ export interface ServerConfig {
 
     postage: PostageConfig;
     postageRate: PostageRateConfig;
-    priceFeeders: PriceFeederConfig[];
+    // priceFeeders: PriceFeederConfig[];
 }
 
 // this environment variable is not set to a default
@@ -65,8 +65,9 @@ if (process.env.PRIVATE_KEY === '') {
 
 const Config: ServerConfig = {
     server: {
-        port: Number(process.env.SERVER_PORT ? process.env.SERVER_PORT : 3000),
-        host: process.env.SERVER_HOST ? process.env.SERVER_HOST : '0.0.0.0',
+        // port: Number(process.env.SERVER_PORT),
+        port: Number(process.env.PORT),
+        host: process.env.SERVER_HOST,
         limitEvery: 15 * 60 * 1000,
         limitMaxReqs: 100,
     },
@@ -77,7 +78,7 @@ const Config: ServerConfig = {
         privateKey: bitcore.PrivateKey.fromWIF(process.env.PRIVATE_KEY),
         network: process.env.NETWORK,
         memo: process.env.MEMO,
-        stampGenerationIntervalSeconds: Number(process.env.STAMP_GENERATION_INTERVAL ? process.env.STAMP_GENERATION_INTERVAL : 600),
+        stampGenerationIntervalSeconds: Number(process.env.STAMP_GENERATION_INTERVAL),
     },
     postageRate: {
         version: 1,
@@ -88,64 +89,81 @@ const Config: ServerConfig = {
             // Here you should enumerate all of the tokens you'd like to support
             // you can have the rate be updated regularly by using the priceFeeders config below
             {
-                name: "Spice",
-                symbol: "SPICE",
-                tokenId: "4de69e374a8ed21cbddd47f2338cc0f479dc58daa2bbe11cd604ca488eca0ddf",
-                decimals: 8,
+                name: "MAZE",
+                symbol: "MAZE",
+                tokenId: "bb553ac2ac7af0fcd4f24f9dfacc7f925bfb1446c6e18c7966db95a8d50fb378",
+                decimals: 6,
                 // cost per satoshi in slp base units
                 // base units are the token prior to having decimals applied to it
-                // spice has 8 decimals, so for each 1 spice there are 10^8 base units of spice
-                rate: new BigNumber(10)
+                // maze has 6 decimals, so for each 1 maze there are 10^6 base units of maze
+                rate: 5000000
             },
             {
-                name: "Honk",
-                symbol: "Honk",
-                tokenId: "7f8889682d57369ed0e32336f8b7e0ffec625a35cca183f4e81fde4e71a538a1",
-                decimals: 0,
+                name: "dSLP",
+                symbol: "dSLP",
+                tokenId: "5aa6c9485f746cddfb222cba6e215ab2b2d1a02f3c2506774b570ed40c1206e8",
+                decimals: 4,
                 // cost per satoshi in slp base units 
                 // base units are the token prior to having decimals applied to it
-                // spice has 8 decimals, so for each 1 spice there are 10^8 base units of spice
-                rate: new BigNumber(10)
+                rate: 50000
+            },
+            {
+                name: "Blind Hackers Group",
+                symbol: "BHACK",
+                tokenId: "bc3ab6616aecd03ecbff478c882e05df043e8af959f3c3964c9c9d15ba7d55bd",
+                decimals: 4,
+                // cost per satoshi in slp base units 
+                // base units are the token prior to having decimals applied to it
+                rate: 50000
+            },
+            {
+                name: "MAZE-REBEL",
+                symbol: "REBEL",
+                tokenId: "4b42d3f9c9aa48b78efc1fc05d4c92314352409d387880e5803358522a33e968",
+                decimals: 2,
+                // cost per satoshi in slp base units 
+                // base units are the token prior to having decimals applied to it
+                rate: 1000
+            },
+            {
+                name: "MAZE-VANDALS",
+                symbol: "VANDALS",
+                tokenId: "30d05b44dc304db9cf56a6138c1dfdbb24f7c8d9e26c87a8079acc461e61b684",
+                decimals: 2,
+                // cost per satoshi in slp base units 
+                // base units are the token prior to having decimals applied to it
+                rate: 1000
+            },
+            {
+                name: "MAZE-CARTEL",
+                symbol: "CARTEL",
+                tokenId: "7b5d1aa0918d96540997db8313e3b06231bc6fd84a020c282f9c774c7729abf9",
+                decimals: 2,
+                // cost per satoshi in slp base units 
+                // base units are the token prior to having decimals applied to it
+                rate: 1000
             }
         ]
     },
-    priceFeeders: [
+    // priceFeeders: [
         // SPICE / exchange.bitcoin.com
         // for demonstration purposes, you should disable if not using SPICE
-        {
-            tick: 5, // how often to update price (in seconds)
-            tokenId: "4de69e374a8ed21cbddd47f2338cc0f479dc58daa2bbe11cd604ca488eca0ddf",
-            feederClass: BitcoinComSpiceApiWrapper, // reference the associated TokenPriceFeeder
-            useInitialStampRateAsMin: false, // if true: prevent going under the specified rate in postageRate.stamps
+        // {
+            // tick: 5, // how often to update price (in seconds)
+            // tokenId: "4de69e374a8ed21cbddd47f2338cc0f479dc58daa2bbe11cd604ca488eca0ddf",
+            // feederClass: BitcoinComSpiceApiWrapper, // reference the associated TokenPriceFeeder
+            // useInitialStampRateAsMin: false, // if true: prevent going under the specified rate in postageRate.stamps
 
             // you may apply a custom rule that takes a price (in BCH) and applies some modification to it.
             // for this case, we just multiply the price 1.9x, giving us a ~0.9% profit
             // if no custom rule is provided a default of 2x will be done
-            rule: (n: BigNumber): BigNumber => new BigNumber(0.00000546).dividedBy(n).times(1.9),
-        },
-
-        /*
-        // FLEX / coinflex.com
-        {
-            "tokenId": "fb1813fd1a53c1bed61f15c0479cc5315501e6da6a4d06da9d8122c1a4fabb6c",
-            "feederClass": CoinFlexFLEXApiWrapper,
-            "useInitialStampRateAsMin": true
-        },
-        */
-
-        /*
-        // USDT / coinex.com
-        {
-            "tokenId": "9fc89d6b7d5be2eac0b3787c5b8236bca5de641b5bafafc8f450727b63615c11",
-            "feederClass": CoinexUSDTApiWrapper,
-            "useInitialStampRateAsMin": true
-        }
-        */
+            // rule: (n: BigNumber): BigNumber => new BigNumber(0.00000546).dividedBy(n).times(1.9),
+        // },
 
         /*
          * Add your own implementations here...
          */
-    ],
+    // ],
 };
 
 export { Config };

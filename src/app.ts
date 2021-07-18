@@ -5,8 +5,8 @@ import cors = require('cors')
 import { Mutex } from 'async-mutex';
 import ErrorMessages from './ErrorMessages';
 import Postage from './Postage';
-import TokenPriceFeeder from './TokenPriceFeeder/TokenPriceFeeder';
-import { Config, PriceFeederConfig } from './Config';
+// import TokenPriceFeeder from './TokenPriceFeeder/TokenPriceFeeder';
+import { Config } from './Config';
 import { Log } from './Log';
 import BCHDNetwork from './Network/BCHDNetwork';
 
@@ -87,9 +87,9 @@ app.post('/postage', async function(req: express.Request, res: express.Response)
  */
 (async (): Promise<void> => {
 
-    Config.priceFeeders.forEach((priceFeeder: PriceFeederConfig) => {
-        new TokenPriceFeeder(priceFeeder).run();
-    });
+    // Config.priceFeeders.forEach((priceFeeder: PriceFeederConfig) => {
+        // new TokenPriceFeeder(priceFeeder).run();
+    // });
 
     Log.info(`Send stamps to: ${postage.getDepositAddress().toString()}`);
     Log.info(`Found ${(await network.fetchUTXOs(postage.getDepositAddress())).length} stamps`);
@@ -100,7 +100,8 @@ app.post('/postage', async function(req: express.Request, res: express.Response)
     );
     postage.generateStamps();
 
-    const server = app.listen(Config.server.port, Config.server.host, async () => {
+    // const server = app.listen(Config.server.port, Config.server.host, async () => {
+    const server = app.listen(process.env.PORT, async () => {
         Log.info(`Post Office listening ${Config.server.host}:${Config.server.port}`);
     });
 

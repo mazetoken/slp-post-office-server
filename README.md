@@ -1,3 +1,40 @@
+# MAZE BCH SLP smart contract tokens - SLP Post Office Server
+
+prepared for MAZE, dSLP, BHACK, REBEL, VANDALS and CARTEL (https://mazetoken.github.io)
+
+priceFeeders are removed, npm packages are updated and other minor changes
+
+## Setup
+
+Create a new wallet in [Electron Cash SLP edition](https://github.com/simpleledger/Electron-Cash-SLP/releases/tag/3.6.6), choose address (e.g. address index 0), send BCH (e.g. 0.00050000) to the address
+
+Download or clone this repository
+
+Edit:
+
+- .env file (type/paste your wallet address PRIVATE_KEY (WIF)- e.g. address index 0 and slp ADDRESS- e.g. address index 1),
+
+- src/Config.ts (change tokens you want to use as stamps and set rates),
+
+- public/index.html (your tokens)
+
+Open a command line (PowerShell or Linux terminal) and type:
+
+`npm i`
+`npm start`
+
+Post-Office stamps will be generated
+
+You can run it locally (http://localhost:3000) or deploy it e.g. on [Heroku](https://heroku.com) - like this: https://mazepostage.herokuapp.com
+
+This repository is for postage protocol testing. Use it at your own risk. You can read the tutorial below and try the original repository first
+
+"As the Post Office is still new there is not wallet support for it yet. If you are a developer and would like to test or inspect the fork of Electron Cash SLP with the Post Office you can find the link below.
+
+- [Electron Cash SLP](https://github.com/OPReturnCode/Electron-Cash-SLP/commits/post-office) (Development)"
+
+------------------------
+
 # SLP Post Office Server
 
 An implementation of the Simple Ledger Postage Protocol
