@@ -1,8 +1,8 @@
-# MAZE BCH SLP smart contract tokens - SLP Post Office Server
+# MAZE BCH SLP smart contract tokens - SLP Post Office Server with tokens swap rates
 
 prepared for MAZE, dSLP, BHACK, REBEL, VANDALS and CARTEL (https://mazetoken.github.io)
 
-priceFeeders are removed, npm packages are updated and other minor changes
+priceFeeders are removed, npm packages are updated and other minor changes, swap rates are added (to work with slpswap-client)
 
 ## Setup
 
@@ -27,7 +27,11 @@ Post-Office stamps will be generated
 
 You can run it locally (http://localhost:3000) or deploy it e.g. on [Heroku](https://heroku.com) - like this: https://mazepostage.herokuapp.com
 
-This repository is for postage protocol testing. Use it at your own risk. You can read the tutorial below and try the original repository first
+This repository is not fully tested so there can be bugs. Use it at your own risk. You can read the tutorial below and try the original repository first
+
+Postage api: https://mazepostage.herokuapp.com/postage
+
+Swap rates api: https://mazepostage.herokuapp.com/swap
 
 "As the Post Office is still new there is not wallet support for it yet. If you are a developer and would like to test or inspect the fork of Electron Cash SLP with the Post Office you can find the link below.
 
