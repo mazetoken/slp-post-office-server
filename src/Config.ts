@@ -4,51 +4,50 @@ import bitcore from 'bitcore-lib-cash';
 import { BigNumber } from 'bignumber.js';
 
 export interface StampConfig {
-    name: string;
-    symbol: string;
-    tokenId: string;
-    decimals: number;
-    rate: number;
+    name: string,
+    symbol: string,
+    tokenId: string,
+    decimals: number,
+    rate: BigNumber
 }
 
 export interface SwapConfig {
-    name: string;
-    symbol: string;
-    tokenId: string;
-    decimals: number;
-    buy: number;
-    sell: number;
-    available: number;
+    name: string,
+    symbol: string,
+    tokenId: string,
+    decimals: number,
+    buy: number,
+    sell: number
 }
 
 export interface PostageConfig {
-    memo: string;
-    network: string;
-    stampGenerationIntervalSeconds: number;
-    privateKey: bitcore.PrivateKey;
+    memo: string,
+    network: string,
+    stampGenerationIntervalSeconds: number,
+    privateKey: bitcore.PrivateKey
 }
 
 export interface PostageRateConfig {
-    version: number;
-    address: string;
-    weight: number;
-    transactionttl: number;
-    stamps: StampConfig[];
+    version: number,
+    address: string,
+    weight: number,
+    transactionttl: number,
+    stamps: StampConfig[]
 }
 
 export interface SwapRateConfig {
-    version: number;
-    address: string;
-    unit: string;
-    tokens: SwapConfig[];
+    version: number,
+    address: string,
+    unit: string,
+    tokens: SwapConfig[]
 }
 
 export interface ServerConfig {
     server: {
-        port: number;
-        host: string;
-        limitEvery: number;
-        limitMaxReqs: number;
+        port: number,
+        host: string,
+        limitEvery: number,
+        limitMaxReqs: number
     };
 
     bchd: {
@@ -97,52 +96,49 @@ const Config: ServerConfig = {
                 // cost per satoshi in slp base units
                 // base units are the token prior to having decimals applied to it
                 // maze has 6 decimals, so for each 1 maze there are 10^6 base units of maze
-                rate: 3000000
+                rate: new BigNumber(1250000)
             },
             {
                 name: "dSLP",
                 symbol: "dSLP",
                 tokenId: "5aa6c9485f746cddfb222cba6e215ab2b2d1a02f3c2506774b570ed40c1206e8",
                 decimals: 4,
-                // cost per satoshi in slp base units 
-                // base units are the token prior to having decimals applied to it
-                rate: 30000
+                rate: new BigNumber(12500)
             },
             {
                 name: "Blind Hackers Group",
                 symbol: "BHACK",
                 tokenId: "bc3ab6616aecd03ecbff478c882e05df043e8af959f3c3964c9c9d15ba7d55bd",
                 decimals: 4,
-                // cost per satoshi in slp base units 
-                // base units are the token prior to having decimals applied to it
-                rate: 30000
+                rate: new BigNumber(12500)
+            },
+            {
+                name: "Mistcoin",
+                symbol: "Mist",
+                tokenId: "d6876f0fce603be43f15d34348bb1de1a8d688e1152596543da033a060cff798",
+                decimals: 6,
+                rate: new BigNumber(1250000)
             },
             {
                 name: "MAZE-REBEL",
                 symbol: "REBEL",
                 tokenId: "4b42d3f9c9aa48b78efc1fc05d4c92314352409d387880e5803358522a33e968",
                 decimals: 2,
-                // cost per satoshi in slp base units 
-                // base units are the token prior to having decimals applied to it
-                rate: 500
+                rate: new BigNumber(250)
             },
             {
                 name: "MAZE-VANDALS",
                 symbol: "VANDALS",
                 tokenId: "30d05b44dc304db9cf56a6138c1dfdbb24f7c8d9e26c87a8079acc461e61b684",
                 decimals: 2,
-                // cost per satoshi in slp base units 
-                // base units are the token prior to having decimals applied to it
-                rate: 500
+                rate: new BigNumber(250)
             },
             {
                 name: "MAZE-CARTEL",
                 symbol: "CARTEL",
                 tokenId: "7b5d1aa0918d96540997db8313e3b06231bc6fd84a020c282f9c774c7729abf9",
                 decimals: 2,
-                // cost per satoshi in slp base units 
-                // base units are the token prior to having decimals applied to it
-                rate: 500
+                rate: new BigNumber(250)
             }
         ]
     },
@@ -156,27 +152,24 @@ const Config: ServerConfig = {
                 symbol: "MAZE",
                 tokenId: "bb553ac2ac7af0fcd4f24f9dfacc7f925bfb1446c6e18c7966db95a8d50fb378",
                 decimals: 6,
-                buy: 0.00000250,
-                sell: 0.00000350,
-                available: 1000
+                buy: 0.00000150,
+                sell: 0.00000350
             },
             {
                 name: "dSLP",
                 symbol: "dSLP",
                 tokenId: "5aa6c9485f746cddfb222cba6e215ab2b2d1a02f3c2506774b570ed40c1206e8",
                 decimals: 4,
-                buy: 0.00000200,
-                sell: 0.00000300,
-                available: 1000
+                buy: 0.00000150,
+                sell: 0.00000300
             },
             {
                 name: "Blind Hackers Group",
                 symbol: "BHACK",
                 tokenId: "bc3ab6616aecd03ecbff478c882e05df043e8af959f3c3964c9c9d15ba7d55bd",
                 decimals: 4,
-                buy: 0.00000200,
-                sell: 0.00000300,
-                available: 1000
+                buy: 0.00000150,
+                sell: 0.00000300
             },
             {
                 name: "MAZE-REBEL",
@@ -184,8 +177,7 @@ const Config: ServerConfig = {
                 tokenId: "4b42d3f9c9aa48b78efc1fc05d4c92314352409d387880e5803358522a33e968",
                 decimals: 2,
                 buy: 0.00000150,
-                sell: 0.00000250,
-                available: 1000
+                sell: 0.00000250
             },
             {
                 name: "MAZE-VANDALS",
@@ -193,8 +185,7 @@ const Config: ServerConfig = {
                 tokenId: "30d05b44dc304db9cf56a6138c1dfdbb24f7c8d9e26c87a8079acc461e61b684",
                 decimals: 2,
                 buy: 0.00000150,
-                sell: 0.00000250,
-                available: 1000
+                sell: 0.00000250
             },
             {
                 name: "MAZE-CARTEL",
@@ -202,17 +193,15 @@ const Config: ServerConfig = {
                 tokenId: "7b5d1aa0918d96540997db8313e3b06231bc6fd84a020c282f9c774c7729abf9",
                 decimals: 2,
                 buy: 0.00000150,
-                sell: 0.00000250,
-                available: 1000
+                sell: 0.00000250
             },
             {
                 name: "Mistcoin",
                 symbol: "MIST",
                 tokenId: "d6876f0fce603be43f15d34348bb1de1a8d688e1152596543da033a060cff798",
                 decimals: 6,
-                buy: 0.00000350,
-                sell: 0.00000450,
-                available: 0
+                buy: 0.00000250,
+                sell: 0.00000450
             }
         ]
     },

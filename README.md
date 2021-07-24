@@ -1,41 +1,53 @@
-# MAZE BCH SLP smart contract tokens - SLP Post Office Server with tokens swap rates
+# SLP Post Office server by MAZE BCH SLP smart contract tokens
 
-prepared for MAZE, dSLP, BHACK, REBEL, VANDALS and CARTEL (https://mazetoken.github.io)
+Supported tokens: MAZE, dSLP, BHACK, Mist, REBEL, VANDALS and CARTEL (https://mazetoken.github.io)
 
-priceFeeders are removed, npm packages are updated and other minor changes, swap rates are added (to work with slpswap-client)
+If you don`t have these tokens to test Post Office you can [mine](https://github.com/mazetoken/mminer) or [mint/farm](https://github.com/mazetoken/slp-smart-contract-tokens) them
 
-## Setup
 
-Create a new wallet in [Electron Cash SLP edition](https://github.com/simpleledger/Electron-Cash-SLP/releases/tag/3.6.6), choose address (e.g. address index 0), send BCH (e.g. 0.00050000) to the address
+## Setup (Post Office provider)
+
+Create a new wallet in [Electron Cash SLP edition](https://github.com/simpleledger/Electron-Cash-SLP/releases/download/3.6.7-dev6/Electron-Cash-SLP-3.6.7-dev6-setup.exe), choose address (e.g. address at index 0), copy private key (WIF) and send BCH (e.g. 0.00050000) to that address (stamps will be created there later)
 
 Download or clone this repository
 
-Edit:
+Open the folder you have downloaded and edit:
 
-- .env file (type/paste your wallet address PRIVATE_KEY (WIF)- e.g. address index 0 and slp ADDRESS- e.g. address index 1),
+- .env file (type/paste your wallets details e.g. WIF),
 
 - src/Config.ts (change tokens you want to use as stamps and set rates),
 
-- public/index.html (your tokens)
+- public/index.html (change website)
 
 Open a command line (PowerShell or Linux terminal) and type:
 
 `npm i`
 `npm start`
 
-Post-Office stamps will be generated
+Post Office stamps will be generated (you will see multiple BCH 546 sats in Electron Cash wallet - Coins tab)
 
-You can run it locally (http://localhost:3000) or deploy it e.g. on [Heroku](https://heroku.com) - like this: https://mazepostage.herokuapp.com
+You can run the server locally (http://localhost:3000) or deploy it e.g. on [Heroku](https://heroku.com)
 
-This repository is not fully tested so there can be bugs. Use it at your own risk. You can read the tutorial below and try the original repository first
+
+## Setup (Post Office user)
 
 Postage api: https://mazepostage.herokuapp.com/postage
 
-Swap rates api: https://mazepostage.herokuapp.com/swap
+Swap rates api: https://mazepostage.herokuapp.com/swap (not tested yet)
 
-"As the Post Office is still new there is not wallet support for it yet. If you are a developer and would like to test or inspect the fork of Electron Cash SLP with the Post Office you can find the link below.
+Download and install [Electron Cash SLP edition](https://github.com/simpleledger/Electron-Cash-SLP/releases/download/3.6.7-dev6/Electron-Cash-SLP-3.6.7-dev6-setup.exe)
 
-- [Electron Cash SLP](https://github.com/OPReturnCode/Electron-Cash-SLP/commits/post-office) (Development)"
+On Windows go to Program Files(x86) folder - ElectronCashSLP - electroncash and open servers_post_office.json file in any editor (e.g. notepad). Add https://mazepostage.herokuapp.com under https://postoffice.fountainhead.cash
+
+Open Electron Cash SLP wallet and go to Tools - Network - Postage (you should see mazepostage server there - click on it)
+
+Send supported SLP tokens to the wallet address. Don`t send BCH to the wallet. Post Office works without BCH
+
+Open https://mazepostage.herokuapp.com in a browser (applications on free Heroku plan sleep after 30 minutes, we need to wake it up ;)
+
+You should be able to send supported tokens to any slp address without BCH fee but you pay fee in token (e.g. you want to send MAZE you will have to pay 5 MAZE fee, because every transaction takes 4 stamps - MAZE rate is 1.25 MAZE per stamp)
+
+_*This repository is for testing [postage protocol](https://slp.dev/specs/slp-postage-protocol/). It`s experimental. PriceFeeders are removed, npm packages are updated and other minor changes, swap rates are added (to work with slpswap-client - not testet yet). Use it at your own risk. You can read the tutorial below and try the original repository first_
 
 ------------------------
 
