@@ -28,7 +28,7 @@ Create a new wallet in ELectron Cash SLP 3.6.7-dev6. Do not send BCH to the wall
 
 In the wallet go to Tools - Network - Postage, check the box - Enable SLP Postage Protocol (you should see mazepostage server there - click on it ; if you click on fountainhead server you can send Spice and Honk token without BCH fee)
 
-Choose one wallet address (e.g. at address index 0) and send supported SLP tokens to this address. Do not send BCH. Wait for at least 1 confirmation
+Choose one wallet address (e.g. at address index 0) and send supported SLP tokens to this address. Do not send BCH. Wait for confirmation
 
 Open https://mazepostage.herokuapp.com in a browser (applications on free Heroku plan sleep after 30 minutes, we might need to wake it up ;-)
 
@@ -42,7 +42,7 @@ Payment sent.
 MAZE SLP Post Office Payment
 ```
 
-_*If you see any Post Office errors (e.g. "No post office supporting the token was found") try again in a minute or open https://mazepostage.herokuapp.com again in the browser and try to send token then. Report issues in [MAZE Telegram Group](https://t.me/mazeslptoken). Post Office is an experimental feature_
+_*If you see any Post Office errors (e.g. "No post office supporting the token was found") try again in a minute or open https://mazepostage.herokuapp.com again in the browser and try to send token then. You can try with different amount too e.g. if you have 100 MAZE you should be able to send 95, if it is not working try to send 90. The same with w.g. REBEL, if you have 1000 you should be able to send 990, if it is not working try to send 985. Report issues in [MAZE Telegram Group](https://t.me/mazeslptoken). Post Office is an experimental feature_
 
 
 ## Setup (Post Office provider) - if you want to create your own Post Office server
