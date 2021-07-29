@@ -26,7 +26,7 @@ On Windows go to Program Files(x86) folder - Electron Cash SLP - electroncash an
 
 Create a new wallet in ELectron Cash SLP 3.6.7-dev6. Do not send BCH to the wallet. Post Office works without BCH
 
-In the wallet go to Tools - Network - Postage (you should see mazepostage server there - click on it ; if you click on fountainhead server you can send Spice and Honk token without BCH fee)
+In the wallet go to Tools - Network - Postage, check the box - Enable SLP Postage Protocol (you should see mazepostage server there - click on it ; if you click on fountainhead server you can send Spice and Honk token without BCH fee)
 
 Choose one wallet address (e.g. at address index 0) and send supported SLP tokens to this address. Do not send BCH. Wait for at least 1 confirmation
 
@@ -35,9 +35,9 @@ Open https://mazepostage.herokuapp.com in a browser (applications on free Heroku
 You should be able to send supported tokens to any slp address without BCH fee, but you pay fee in token (e.g. you want to send MAZE you will have to pay 5 MAZE fee, because every transaction takes 4 stamps (4x546 satoshis - paid by Post Office server provider) - MAZE rate is 1.25 MAZE per stamp for now). You should see something like this:
 
 ```
-BCH amount to be sent: 0.00001092 _- this is locked in token you sent to the wallet_
-Token amount to be send: 25 MAZE _- you need 30 MAZE to send 25 MAZE_
-Postage fee: 5 MAZE _- the fee goes to Post Office server provider_
+BCH amount to be sent: 0.00001092 // this is locked in token you sent to the wallet_
+Token amount to be send: 25 MAZE // you need 30 MAZE to send 25 MAZE_
+Postage fee: 5 MAZE // the fee goes to Post Office server provider_
 Payment sent.
 MAZE SLP Post Office Payment
 ```
