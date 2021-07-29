@@ -1,51 +1,94 @@
 # SLP Post Office server by MAZE BCH SLP smart contract tokens
 
-Supported tokens: MAZE, dSLP, BHACK, Mist, REBEL, VANDALS and CARTEL (https://mazetoken.github.io)
+Supported tokens: MAZE, dSLP, BHACK, Mist, REBEL, VANDALS and CARTEL (https://mazepostage.herokuapp.com)
 
-If you don`t have these tokens to test Post Office you can [mine](https://github.com/mazetoken/mminer) or [mint/farm](https://github.com/mazetoken/slp-smart-contract-tokens) them
+If you don`t have these tokens (to test Post Office - SLP postage protocol) you can [mine](https://github.com/mazetoken/mminer) or [mint/farm](https://github.com/mazetoken/slp-smart-contract-tokens) it
+
+Postage api: https://mazepostage.herokuapp.com/postage
+
+Swap rates api: https://mazepostage.herokuapp.com/swap (not tested yet)
 
 
-## Setup (Post Office provider)
+## Setup (Post Office user)
+
+If You used Electron Cash SLP wallet before (e.g. 3.6.6 version) - backup your wallets
+
+Download and install [Electron Cash SLP wallet developer edition 3.6.7.-dev6](https://github.com/simpleledger/Electron-Cash-SLP/releases/download/3.6.7-dev6/Electron-Cash-SLP-3.6.7-dev6-setup.exe) which has Post Office enabled
+
+On Windows go to Program Files(x86) folder - Electron Cash SLP - electroncash and open `servers_post_office.json` file in any editor (e.g. notepad). Add https://mazepostage.herokuapp.com under https://postoffice.fountainhead.cash. It should look like this:
+
+```
+[
+    "https://postoffice.fountainhead.cash",
+    "https://mazepostage.herokuapp.com"
+]
+```
+
+Create a new wallet in ELectron Cash SLP 3.6.7-dev6. Do not send BCH to the wallet. Post Office works without BCH
+
+In the wallet go to Tools - Network - Postage (you should see mazepostage server there - click on it ; if you click on fountainhead server you can send Spice and Honk token without BCH fee)
+
+Choose one wallet address (e.g. at address index 0) and send supported SLP tokens to this address. Do not send BCH. Wait for at least 1 confirmation
+
+Open https://mazepostage.herokuapp.com in a browser (applications on free Heroku plan sleep after 30 minutes, we might need to wake it up ;-)
+
+You should be able to send supported tokens to any slp address without BCH fee, but you pay fee in token (e.g. you want to send MAZE you will have to pay 5 MAZE fee, because every transaction takes 4 stamps (4x546 satoshis - paid by Post Office server provider) - MAZE rate is 1.25 MAZE per stamp for now). You should see something like this:
+
+```
+BCH amount to be sent: 0.00001092 _- this is locked in token you sent to the wallet_
+Token amount to be send: 25 MAZE _- you need 30 MAZE to send 25 MAZE_
+Postage fee: 5 MAZE _- the fee goes to Post Office server provider_
+Payment sent.
+MAZE SLP Post Office Payment
+```
+
+_*If you see any Post Office errors (e.g. "No post office supporting the token was found") try again in a minute or open https://mazepostage.herokuapp.com again in the browser and try to send token then. Report issues in [MAZE Telegram Group](https://t.me/mazeslptoken). Post Office is an experimental feature_
+
+
+## Setup (Post Office provider) - if you want to create your own Post Office server
 
 Create a new wallet in [Electron Cash SLP edition](https://github.com/simpleledger/Electron-Cash-SLP/releases/download/3.6.7-dev6/Electron-Cash-SLP-3.6.7-dev6-setup.exe), choose address (e.g. address at index 0), copy private key (WIF) and send BCH (e.g. 0.00050000) to that address (stamps will be created there later)
 
 Download or clone this repository
 
-Open the folder you have downloaded and edit:
+Open the folder you have downloaded the wallet and edit:
 
-- .env file (type/paste your wallets details e.g. WIF),
+- .env file (type/paste your wallets details - PRIVATE_KEY - the wallet you generate stamps and ADDRESS - the wallet address where you receive tokens as fee - better use different wallet than wallet your stamps were generated in),
 
-- src/Config.ts (change tokens you want to use as stamps and set rates),
+- src/Config.ts (change token environment you want to use as stamp and set rate), e.g. change this:
 
-- public/index.html (change website)
+```
+postageRate: {
+        version: 1,
+        address: process.env.ADDRESS,
+        weight: 365,
+        transactionttl: 30,
+        stamps: [
+            // Here you should enumerate all of the tokens you'd like to support
+            {
+                name: "MAZE",
+                symbol: "MAZE",
+                tokenId: "bb553ac2ac7af0fcd4f24f9dfacc7f925bfb1446c6e18c7966db95a8d50fb378",
+                decimals: 6,
+                // cost per satoshi in slp base units
+                // base units are the token prior to having decimals applied to it
+                // maze has 6 decimals, so for each 1 maze there are 10^6 base units of maze
+                rate: new BigNumber(1250000)
+            },
+
+```
+
+- public/index.html (change website for you needs)
 
 Open a command line (PowerShell or Linux terminal) and type:
 
 `npm i`
 `npm start`
 
-Post Office stamps will be generated (you will see multiple BCH 546 sats in Electron Cash wallet - Coins tab)
+Post Office stamps will be generated in the wallet which PRIVATE_KEY you used in .env file (you will see multiple BCH 546 sats in Electron Cash wallet - Coins tab)
 
 You can run the server locally (http://localhost:3000) or deploy it e.g. on [Heroku](https://heroku.com)
 
-
-## Setup (Post Office user)
-
-Postage api: https://mazepostage.herokuapp.com/postage
-
-Swap rates api: https://mazepostage.herokuapp.com/swap (not tested yet)
-
-Download and install [Electron Cash SLP edition](https://github.com/simpleledger/Electron-Cash-SLP/releases/download/3.6.7-dev6/Electron-Cash-SLP-3.6.7-dev6-setup.exe)
-
-On Windows go to Program Files(x86) folder - ElectronCashSLP - electroncash and open servers_post_office.json file in any editor (e.g. notepad). Add https://mazepostage.herokuapp.com under https://postoffice.fountainhead.cash
-
-Open Electron Cash SLP wallet and go to Tools - Network - Postage (you should see mazepostage server there - click on it)
-
-Send supported SLP tokens to the wallet address. Don`t send BCH to the wallet. Post Office works without BCH
-
-Open https://mazepostage.herokuapp.com in a browser (applications on free Heroku plan sleep after 30 minutes, we need to wake it up ;)
-
-You should be able to send supported tokens to any slp address without BCH fee but you pay fee in token (e.g. you want to send MAZE you will have to pay 5 MAZE fee, because every transaction takes 4 stamps - MAZE rate is 1.25 MAZE per stamp)
 
 _*This repository is for testing [postage protocol](https://slp.dev/specs/slp-postage-protocol/). It`s experimental. PriceFeeders are removed, npm packages are updated and other minor changes, swap rates are added (to work with slpswap-client - not testet yet). Use it at your own risk. You can read the tutorial below and try the original repository first_
 
