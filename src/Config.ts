@@ -132,13 +132,6 @@ const Config: ServerConfig = {
                 tokenId: "30d05b44dc304db9cf56a6138c1dfdbb24f7c8d9e26c87a8079acc461e61b684",
                 decimals: 2,
                 rate: new BigNumber(250)
-            },
-            {
-                name: "MAZE-CARTEL",
-                symbol: "CARTEL",
-                tokenId: "7b5d1aa0918d96540997db8313e3b06231bc6fd84a020c282f9c774c7729abf9",
-                decimals: 2,
-                rate: new BigNumber(250)
             }
         ]
     },
@@ -183,14 +176,6 @@ const Config: ServerConfig = {
                 name: "MAZE-VANDALS",
                 symbol: "VANDALS",
                 tokenId: "30d05b44dc304db9cf56a6138c1dfdbb24f7c8d9e26c87a8079acc461e61b684",
-                decimals: 2,
-                buy: 0.00000150,
-                sell: 0.00000250
-            },
-            {
-                name: "MAZE-CARTEL",
-                symbol: "CARTEL",
-                tokenId: "7b5d1aa0918d96540997db8313e3b06231bc6fd84a020c282f9c774c7729abf9",
                 decimals: 2,
                 buy: 0.00000150,
                 sell: 0.00000250
